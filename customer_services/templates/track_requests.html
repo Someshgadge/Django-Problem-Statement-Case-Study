@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Track Your Service Requests</h1>
+  <ul>
+    {% for request in service_requests %}
+      <li>
+        <strong>Status:</strong> {{ request.status }}<br>
+        <strong>Type:</strong> {{ request.get_type_display }}<br>
+        <strong>Details:</strong> {{ request.details }}<br>
+        <strong>Submitted Date:</strong> {{ request.submitted_date }}<br>
+        {% if request.status == 'Resolved' %}
+          <strong>Resolved Date:</strong> {{ request.resolved_date }}<br>
+          <strong>Resolution:</strong> {{ request.resolution }}<br>
+        {% endif %}
+        {% if request.status != 'Closed' %}  
+          <a href="{% url 'customer_services:update_request' request.id %}">Update Request</a><br>  
+        {% endif %}  
+      </li>
+      <br>
+    {% endfor %}
+  </ul>
+{% endblock %}
